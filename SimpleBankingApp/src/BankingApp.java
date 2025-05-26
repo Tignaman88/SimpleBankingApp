@@ -7,13 +7,14 @@ public class BankingApp {
 
     public void deposit(double accountMoney, double moneyToDeposit) {
 
-        this.balance = accountMoney + moneyToDeposit;
+        balance = accountMoney + moneyToDeposit;
     }
 
     public boolean withdraw(double accountMoney, double moneyToWithdraw) {
-
-        this.balance = accountMoney - moneyToWithdraw;
-        return balance < 0;
+        if (moneyToWithdraw < accountMoney) {
+            this.balance = accountMoney - moneyToWithdraw;
+        }
+        return moneyToWithdraw > accountMoney;
     }
 
 }

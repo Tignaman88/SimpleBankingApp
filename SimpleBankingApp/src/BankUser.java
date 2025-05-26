@@ -11,6 +11,14 @@ public class BankUser extends BankingApp {
         this.accountMoney = accountMoney;
     }
 
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
     public double getAccountMoney() {
         return accountMoney;
     }
@@ -25,10 +33,12 @@ public class BankUser extends BankingApp {
 
     }
 
-    @Override
+
     public boolean withdraw(double accountMoney, double moneyToWithdraw) {
-        this.accountMoney = accountMoney - moneyToWithdraw;
-        return accountMoney < 0;
+        if (moneyToWithdraw < accountMoney) {
+            this.accountMoney = accountMoney - moneyToWithdraw;
+        }
+        return moneyToWithdraw > accountMoney;
     }
 
     @Override
