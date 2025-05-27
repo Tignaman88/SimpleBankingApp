@@ -15,6 +15,7 @@ public class Main {
         double moneyToWithdraw;
         boolean isDepositOrWithdraw = true;
         boolean isNumeric = true;
+        boolean isMoreThanAvailableBalance = true;
         while (isDepositOrWithdraw) {
             String userInput = scanner.nextLine();
             if (!userInput.equalsIgnoreCase("d") && !userInput.equalsIgnoreCase("w")) {
@@ -30,7 +31,7 @@ public class Main {
                     } else {
                         moneyToDeposit = Double.parseDouble(moneyInput);
                         AlessioScarpello.deposit(AlessioScarpello.accountMoney, moneyToDeposit);
-                        System.out.println("Hello " + AlessioScarpello.getFirstName() + ", here's your updated balance:" +
+                        System.out.println("Hello " + AlessioScarpello.getFirstName() + ", here's your updated balance: " +
                                 "£" + AlessioScarpello.getAccountMoney());
                         isNumeric = false;
                     }
@@ -46,11 +47,20 @@ public class Main {
                     if (!isNumeric(moneyInput)) {
                         System.out.println("You have not selected a valid number, please try again: ");
                     } else {
-                        moneyToWithdraw = Double.parseDouble(moneyInput);
-                        AlessioScarpello.withdraw(AlessioScarpello.accountMoney, moneyToWithdraw);
-                        System.out.println("Hello " + AlessioScarpello.getFirstName() + ", here's your updated balance: " +
-                                "£" + AlessioScarpello.getAccountMoney());
-                        isNumeric = false;
+                        while (isMoreThanAvailableBalance) {
+                            moneyToWithdraw = Double.parseDouble(moneyInput);
+                            if (AlessioScarpello.withdraw(AlessioScarpello.accountMoney, moneyToWithdraw)) {
+                                System.out.println("You cannot withdraw more than what you have, please try a different amount: ");
+                                moneyInput = scanner.nextLine();
+                            } else {
+                                AlessioScarpello.withdraw(AlessioScarpello.accountMoney, moneyToWithdraw);
+                                System.out.println("Hello " + AlessioScarpello.getFirstName() + ", here's your updated balance: " +
+                                        "£" + AlessioScarpello.getAccountMoney());
+                                isNumeric = false;
+                                isMoreThanAvailableBalance = false;
+                            }
+                        }
+
                     }
                 }
 
