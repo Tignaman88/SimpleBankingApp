@@ -53,7 +53,6 @@ public class Main {
                                 System.out.println("You cannot withdraw more than what you have, please try a different amount: ");
                                 moneyInput = scanner.nextLine();
                             } else {
-                                AlessioScarpello.withdraw(AlessioScarpello.accountMoney, moneyToWithdraw);
                                 System.out.println("Hello " + AlessioScarpello.getFirstName() + ", here's your updated balance: " +
                                         "£" + AlessioScarpello.getAccountMoney());
                                 isNumeric = false;
