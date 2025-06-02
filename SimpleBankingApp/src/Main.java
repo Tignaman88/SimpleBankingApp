@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -6,65 +7,84 @@ public class Main {
 
         //Create an object
         BankUser AlessioScarpello = new BankUser("Alessio", "Scarpello", 2458.24);
+        BankUser MarcoValerio = new BankUser("Marco", "Valerio", 3897.45);
+        BankUser CarlaJackson = new BankUser("Carla", "Jackson", 6743.55);
+
+        // Creating an array list that will hold bank users
+        ArrayList<BankUser> bankUsers = new ArrayList<>();
+        bankUsers.add(AlessioScarpello);
+        bankUsers.add(MarcoValerio);
+        bankUsers.add(CarlaJackson);
+
+
+
 
         // Create input variable to be used to deposit or withdraw
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Hello! Please enter D to deposit, or W to withdraw money from your account: ");
+        System.out.println("Please enter your name: ");
+        //System.out.println("Hello! Please enter D to deposit, or W to withdraw money from your account: ");
         String moneyInput;
         double moneyToDeposit;
         double moneyToWithdraw;
         boolean isDepositOrWithdraw = true;
         boolean isNumeric = true;
         boolean isMoreThanAvailableBalance = true;
-        while (isDepositOrWithdraw) {
-            String userInput = scanner.nextLine();
-            if (!userInput.equalsIgnoreCase("d") && !userInput.equalsIgnoreCase("w")) {
-                System.out.println("You have not selected the right option, please try again: ");
-            } else if (userInput.equalsIgnoreCase("d")) {
-                System.out.println("Great! How much you'd like to deposit? ");
+        boolean isUserInArrayList;
+        boolean isFirstName = true;
+        boolean isLastName;
+        boolean isMatchFound = false;
+        // Variable to be used if user is contained in ArrayList
+        String bankUserInput;
+        String bankUserFirstName;
+        String bankUserLastName;
+        String bankUserFullName;
 
-                // Check if money input by user is a number
-                while (isNumeric) {
-                    moneyInput = scanner.nextLine();
-                    if (!isNumeric(moneyInput)) {
-                        System.out.println("You have not selected a valid number, please try again: ");
+        System.out.println("Hello and welcome! Please enter your first name: ");
+        while (isFirstName) {
+
+            bankUserInput = scanner.nextLine();
+            if (bankUserInput.matches(".*\\d.*")) {
+                System.out.println("You've entered a number, please try again: ");
+            } else {
+            bankUserFirstName = bankUserInput;
+            System.out.println("Thank you! Now please enter your last name: ");
+            isFirstName = false;
+            isLastName = true;
+                while (isLastName) {
+                    bankUserInput = scanner.nextLine();
+                    if (bankUserInput.matches(".*\\d.*")) {
+                        System.out.println("You've entered a number, please try again: ");
                     } else {
-                        moneyToDeposit = Double.parseDouble(moneyInput);
-                        AlessioScarpello.deposit(AlessioScarpello.accountMoney, moneyToDeposit);
-                        System.out.println("Hello " + AlessioScarpello.getFirstName() + ", here's your updated balance: " +
-                                "£" + AlessioScarpello.getAccountMoney());
-                        isNumeric = false;
-                    }
-                }
-
-                isDepositOrWithdraw = false;
-            } else if (userInput.equalsIgnoreCase("w")) {
-                System.out.println("Great! How much you'd like to withdraw?");
-
-                // Check if money input by user is a number
-                while (isNumeric) {
-                    moneyInput = scanner.nextLine();
-                    if (!isNumeric(moneyInput)) {
-                        System.out.println("You have not selected a valid number, please try again: ");
-                    } else {
-                        while (isMoreThanAvailableBalance) {
-                            moneyToWithdraw = Double.parseDouble(moneyInput);
-                            if (AlessioScarpello.withdraw(AlessioScarpello.accountMoney, moneyToWithdraw)) {
-                                System.out.println("You cannot withdraw more than what you have, please try a different amount: ");
-                                moneyInput = scanner.nextLine();
-                            } else {
-                                System.out.println("Hello " + AlessioScarpello.getFirstName() + ", here's your updated balance: " +
-                                        "£" + AlessioScarpello.getAccountMoney());
-                                isNumeric = false;
-                                isMoreThanAvailableBalance = false;
+                        bankUserLastName = bankUserInput;
+                        isLastName = false;
+                        isUserInArrayList = true;
+                        while (isUserInArrayList) {
+                            System.out.println(bankUserFirstName + " " + bankUserLastName);
+                            for (BankUser bankUserObject : bankUsers) {
+                                if (bankUserObject.getFirstName().equalsIgnoreCase(bankUserFirstName) && bankUserObject.getLastName().equalsIgnoreCase(bankUserLastName)) {
+                                    isMatchFound = true;
+                                    System.out.println("Match Found!");
+                                    isUserInArrayList = false;
+                                    break;
+                                }
                             }
-                        }
+                            if (!isMatchFound) {
+                                System.out.println("Match Not Found! Please enter your first and last name again: ");
+                                isFirstName = true;
+                                isUserInArrayList = false;
+                            } else {
+                                bankUserFullName = bankUserFirstName + bankUserLastName;
+                                
+                            }
+                    }
 
                     }
                 }
-
-                isDepositOrWithdraw = false;
             }
+
+
+
+
 
 
         }
