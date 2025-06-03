@@ -37,8 +37,10 @@ public class Main {
         String bankUserInput;
         String bankUserFirstName;
         String bankUserLastName;
-        String bankUserFullName;
+        BankUser bankUserObject = null;
 
+        // Loops that asks user to enter their first and last name
+        // Numbers are not accepted
         System.out.println("Hello and welcome! Please enter your first name: ");
         while (isFirstName) {
 
@@ -58,22 +60,90 @@ public class Main {
                         bankUserLastName = bankUserInput;
                         isLastName = false;
                         isUserInArrayList = true;
+                        // Loop that checks if first and last name are matched with object in array list
                         while (isUserInArrayList) {
                             System.out.println(bankUserFirstName + " " + bankUserLastName);
-                            for (BankUser bankUserObject : bankUsers) {
-                                if (bankUserObject.getFirstName().equalsIgnoreCase(bankUserFirstName) && bankUserObject.getLastName().equalsIgnoreCase(bankUserLastName)) {
+                            for (BankUser object : bankUsers) {
+                                if (object.getFirstName().equalsIgnoreCase(bankUserFirstName) && object.getLastName().equalsIgnoreCase(bankUserLastName)) {
                                     isMatchFound = true;
                                     System.out.println("Match Found!");
+                                    bankUserObject = object;
                                     isUserInArrayList = false;
                                     break;
                                 }
                             }
+
+                            // If match not found, start all over
+                            // Else, assign the object to the variable bankUserObject used to deposit or withdraw in that account
                             if (!isMatchFound) {
                                 System.out.println("Match Not Found! Please enter your first and last name again: ");
                                 isFirstName = true;
                                 isUserInArrayList = false;
                             } else {
-                                bankUserFullName = bankUserFirstName + bankUserLastName;
+                                System.out.println("Welcome " + bankUserFirstName + " " + bankUserLastName + "!");
+                                System.out.println("What would you like to do? Press D for deposit, or W to withdraw");
+                                // Loops that ask user if it wants to deposit or withdraw money
+                                while (isDepositOrWithdraw) {
+                                    String userInput = scanner.nextLine();
+                                    if (!userInput.equalsIgnoreCase("d") && !userInput.equalsIgnoreCase("w")) {
+                                        System.out.println("You have not selected the right option, please try again: ");
+                                    } else if (userInput.equalsIgnoreCase("d")) {
+                                        System.out.println("Great! How much you'd like to deposit? ");
+
+                                        // Check if money input by user is a number
+                                        while (isNumeric) {
+                                            moneyInput = scanner.nextLine();
+                                            if (!isNumeric(moneyInput)) {
+                                                System.out.println("You have not selected a valid number, please try again: ");
+                                            } else {
+                                                // Deposit money into account
+                                                moneyToDeposit = Double.parseDouble(moneyInput);
+                                                bankUserObject.deposit(bankUserObject.accountMoney, moneyToDeposit);
+                                                System.out.println("Hello " + bankUserObject.getFirstName() + ", here's your updated balance: " +
+                                                        "£" + bankUserObject.getAccountMoney());
+                                                isNumeric = false;
+                                            }
+                                        }
+
+                                        isDepositOrWithdraw = false;
+                                    } else if (userInput.equalsIgnoreCase("w")) {
+                                        System.out.println("Great! How much you'd like to withdraw?");
+
+                                        // Check if money input by user is a number
+                                        while (isNumeric) {
+                                            moneyInput = scanner.nextLine();
+                                            if (!isNumeric(moneyInput)) {
+                                                System.out.println("You have not selected a valid number, please try again: ");
+                                            } else {
+                                                // Check if amount withdrawn is bigger than amount available
+                                                // If not, go back to above loop
+                                                // Else, withdraw money from account
+                                                isMoreThanAvailableBalance = true;
+                                                while (isMoreThanAvailableBalance) {
+                                                    moneyToWithdraw = Double.parseDouble(moneyInput);
+                                                    if (bankUserObject.withdraw(bankUserObject.accountMoney, moneyToWithdraw)) {
+                                                        System.out.println("You cannot withdraw more than what you have, please try a different amount: ");
+                                                    } else {
+                                                        System.out.println("Hello " + bankUserObject.getFirstName() + ", here's your updated balance: " +
+                                                                "£" + bankUserObject.getAccountMoney());
+                                                        isNumeric = false;
+                                                    }
+                                                    isMoreThanAvailableBalance = false;
+                                                }
+
+                                            }
+                                        }
+
+                                        isDepositOrWithdraw = false;
+                                    }
+
+
+                                }
+
+
+
+
+                            }
 
                             }
                     }
@@ -90,10 +160,6 @@ public class Main {
         }
 
 
-
-
-    }
-
     public static boolean isNumeric(String userInput) {
         try {
             Double.parseDouble(userInput);
@@ -101,7 +167,6 @@ public class Main {
         } catch (NumberFormatException e) {
             return false;
         }
+
     }
 }
-
-
