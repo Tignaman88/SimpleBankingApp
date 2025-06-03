@@ -74,7 +74,7 @@ public class Main {
                                 isUserInArrayList = false;
                             } else {
                                 bankUserFullName = bankUserFirstName + bankUserLastName;
-                                
+
                             }
                     }
 
