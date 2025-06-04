@@ -17,8 +17,6 @@ public class Main {
         bankUsers.add(CarlaJackson);
 
 
-
-
         // Create input variable to be used to deposit or withdraw
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please enter your name: ");
@@ -27,7 +25,7 @@ public class Main {
         double moneyToDeposit;
         double moneyToWithdraw;
         boolean isDepositOrWithdraw = true;
-        boolean isNumeric = true;
+        boolean isNumeric;
         boolean isMoreThanAvailableBalance = true;
         boolean isUserInArrayList;
         boolean isFirstName = true;
@@ -48,10 +46,10 @@ public class Main {
             if (bankUserInput.matches(".*\\d.*")) {
                 System.out.println("You've entered a number, please try again: ");
             } else {
-            bankUserFirstName = bankUserInput;
-            System.out.println("Thank you! Now please enter your last name: ");
-            isFirstName = false;
-            isLastName = true;
+                bankUserFirstName = bankUserInput;
+                System.out.println("Thank you! Now please enter your last name: ");
+                isFirstName = false;
+                isLastName = true;
                 while (isLastName) {
                     bankUserInput = scanner.nextLine();
                     if (bankUserInput.matches(".*\\d.*")) {
@@ -81,95 +79,96 @@ public class Main {
                                 isUserInArrayList = false;
                             } else {
                                 System.out.println("Welcome " + bankUserObject.getFirstName() + " " + bankUserObject.getLastName() + "!");
-                                System.out.println("What would you like to do? Press D for deposit, W to withdraw, or B to show your balance: ");
+                                System.out.println("What would you like to do? Press D for deposit, W to withdraw, B to show your balance, or Q to exit: ");
                                 // Loops that ask user if it wants to deposit or withdraw money
-                                while (isDepositOrWithdraw) {
-                                    String userInput = scanner.nextLine();
-                                    if (!userInput.equalsIgnoreCase("d") && !userInput.equalsIgnoreCase("w") && !userInput.equalsIgnoreCase("b")) {
-                                        System.out.println("You have not selected the right option, please try again: ");
-                                    } else if (userInput.equalsIgnoreCase("b")) {
-                                        System.out.println("Hello " + bankUserObject.getFirstName() + ", here's your balance left: £" + bankUserObject.getAccountMoney());
-                                        System.out.println("What would you like to do? Press D for deposit, W to withdraw, or B to show your balance: ");
-                                    } else if (userInput.equalsIgnoreCase("d")) {
-                                        System.out.println("Great! How much you'd like to deposit? ");
+                                    while (isDepositOrWithdraw) {
+                                        String userInput = scanner.nextLine();
+                                        if (!userInput.equalsIgnoreCase("d") && !userInput.equalsIgnoreCase("w") && !userInput.equalsIgnoreCase("b")
+                                        && !userInput.equalsIgnoreCase("q")) {
+                                            System.out.println("You have not selected the right option, please try again: ");
+                                        } else if (userInput.equalsIgnoreCase("b")) {
+                                            System.out.println("Hello " + bankUserObject.getFirstName() + ", here's your balance left: £" + bankUserObject.getAccountMoney());
+                                            System.out.println("What would you like to do? Press D for deposit, W to withdraw, B to show your balance, or Q to exit: ");
+                                        } else if (userInput.equalsIgnoreCase("q")) {
+                                            System.out.println("Bye!");
+                                            isDepositOrWithdraw = false;
+                                        } else if (userInput.equalsIgnoreCase("d")) {
+                                            System.out.println("Great! How much you'd like to deposit? ");
 
-                                        // Check if money input by user is a number
-                                        while (isNumeric) {
-                                            moneyInput = scanner.nextLine();
-                                            if (!isNumeric(moneyInput)) {
-                                                System.out.println("You have not selected a valid number, please try again: ");
-                                            } else {
-                                                // Deposit money into account
-                                                moneyToDeposit = Double.parseDouble(moneyInput);
-                                                bankUserObject.deposit(bankUserObject.accountMoney, moneyToDeposit);
-                                                System.out.println("Hello " + bankUserObject.getFirstName() + ", here's your updated balance: " +
-                                                        "£" + bankUserObject.getAccountMoney());
-                                                isNumeric = false;
-                                            }
-                                        }
-
-                                        isDepositOrWithdraw = false;
-                                    } else if (userInput.equalsIgnoreCase("w")) {
-                                        System.out.println("Great! How much you'd like to withdraw?");
-
-                                        // Check if money input by user is a number
-                                        while (isNumeric) {
-                                            moneyInput = scanner.nextLine();
-                                            if (!isNumeric(moneyInput)) {
-                                                System.out.println("You have not selected a valid number, please try again: ");
-                                            } else {
-                                                // Check if amount withdrawn is bigger than amount available
-                                                // If not, go back to above loop
-                                                // Else, withdraw money from account
-                                                isMoreThanAvailableBalance = true;
-                                                while (isMoreThanAvailableBalance) {
-                                                    moneyToWithdraw = Double.parseDouble(moneyInput);
-                                                    if (bankUserObject.withdraw(bankUserObject.accountMoney, moneyToWithdraw)) {
-                                                        System.out.println("You cannot withdraw more than what you have, please try a different amount: ");
-                                                    } else {
-                                                        System.out.println("Hello " + bankUserObject.getFirstName() + ", here's your updated balance: " +
-                                                                "£" + bankUserObject.getAccountMoney());
-                                                        isNumeric = false;
-                                                    }
-                                                    isMoreThanAvailableBalance = false;
+                                            isNumeric = true;
+                                            // Check if money input by user is a number
+                                            while (isNumeric) {
+                                                moneyInput = scanner.nextLine();
+                                                if (!isNumeric(moneyInput)) {
+                                                    System.out.println("You have not selected a valid number, please try again: ");
+                                                } else {
+                                                    // Deposit money into account
+                                                    moneyToDeposit = Double.parseDouble(moneyInput);
+                                                    bankUserObject.deposit(bankUserObject.accountMoney, moneyToDeposit);
+                                                    System.out.println("Hello " + bankUserObject.getFirstName() + ", here's your updated balance: " +
+                                                            "£" + bankUserObject.getAccountMoney());
+                                                    System.out.println("What would you like to do now? Press D for deposit, W to withdraw, B to show your balance, or Q to exit: ");
+                                                    isNumeric = false;
                                                 }
-
                                             }
+
+                                        } else if (userInput.equalsIgnoreCase("w")) {
+                                            System.out.println("Great! How much you'd like to withdraw?");
+
+                                            isNumeric = true;
+                                            // Check if money input by user is a number
+                                            while (isNumeric) {
+                                                moneyInput = scanner.nextLine();
+                                                if (!isNumeric(moneyInput)) {
+                                                    System.out.println("You have not selected a valid number, please try again: ");
+                                                } else {
+                                                    // Check if amount withdrawn is bigger than amount available
+                                                    // If not, go back to above loop
+                                                    // Else, withdraw money from account
+                                                    isMoreThanAvailableBalance = true;
+                                                    while (isMoreThanAvailableBalance) {
+                                                        moneyToWithdraw = Double.parseDouble(moneyInput);
+                                                        if (bankUserObject.withdraw(bankUserObject.accountMoney, moneyToWithdraw)) {
+                                                            System.out.println("You cannot withdraw more than what you have, please try a different amount: ");
+                                                        } else {
+                                                            System.out.println("Hello " + bankUserObject.getFirstName() + ", here's your updated balance: " +
+                                                                    "£" + bankUserObject.getAccountMoney());
+                                                            System.out.println("What would you like to do now? Press D for deposit, W to withdraw, B to show your balance, or Q to exit: ");
+                                                            isNumeric = false;
+                                                        }
+                                                        isMoreThanAvailableBalance = false;
+                                                    }
+
+                                                }
+                                            }
+
                                         }
 
-                                        isDepositOrWithdraw = false;
+
                                     }
 
 
                                 }
 
-
-
-
                             }
+                        }
 
-                            }
-                    }
-
-                    }
                 }
             }
 
 
-
-
-
-
         }
 
-
-    public static boolean isNumeric(String userInput) {
-        try {
-            Double.parseDouble(userInput);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
 
     }
-}
+        public static boolean isNumeric (String userInput){
+            try {
+                Double.parseDouble(userInput);
+                return true;
+            } catch (NumberFormatException e) {
+                return false;
+            }
+
+        }
+    }
+
