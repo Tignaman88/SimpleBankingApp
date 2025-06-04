@@ -80,13 +80,16 @@ public class Main {
                                 isFirstName = true;
                                 isUserInArrayList = false;
                             } else {
-                                System.out.println("Welcome " + bankUserFirstName + " " + bankUserLastName + "!");
-                                System.out.println("What would you like to do? Press D for deposit, or W to withdraw");
+                                System.out.println("Welcome " + bankUserObject.getFirstName() + " " + bankUserObject.getLastName() + "!");
+                                System.out.println("What would you like to do? Press D for deposit, W to withdraw, or B to show your balance: ");
                                 // Loops that ask user if it wants to deposit or withdraw money
                                 while (isDepositOrWithdraw) {
                                     String userInput = scanner.nextLine();
-                                    if (!userInput.equalsIgnoreCase("d") && !userInput.equalsIgnoreCase("w")) {
+                                    if (!userInput.equalsIgnoreCase("d") && !userInput.equalsIgnoreCase("w") && !userInput.equalsIgnoreCase("b")) {
                                         System.out.println("You have not selected the right option, please try again: ");
+                                    } else if (userInput.equalsIgnoreCase("b")) {
+                                        System.out.println("Hello " + bankUserObject.getFirstName() + ", here's your balance left: £" + bankUserObject.getAccountMoney());
+                                        System.out.println("What would you like to do? Press D for deposit, W to withdraw, or B to show your balance: ");
                                     } else if (userInput.equalsIgnoreCase("d")) {
                                         System.out.println("Great! How much you'd like to deposit? ");
 
