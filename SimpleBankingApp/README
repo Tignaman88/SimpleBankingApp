@@ -1,0 +1,83 @@
+💳 Simple Banking App
+Welcome to my Simple Banking App, a small Java project that simulates basic banking operations like deposits, withdrawals, and balance checks. It's entirely run in the console and was built to help me practice object-oriented programming and user interaction in Java.
+
+🛠️ This is my second solo coding project — it's a work in progress and I'm learning as I go!
+
+🚀 Features
+- Create and store multiple user accounts
+
+- Login simulation via name matching
+
+- Deposit money into your account
+
+- Withdraw money (with validation to prevent overdraft)
+
+- View current account balance
+
+- Console-based menu and interaction
+
+
+📂 Project Structure
+- BankingApp.java – base class with deposit and withdrawal methods
+
+- BankUser.java – extends BankingApp, adds user-specific info (name and balance)
+
+- Main.java – the main class that handles user interaction through the console
+
+
+✅ Option 1: Using IntelliJ IDEA
+
+1. Open the project in IntelliJ.
+
+2. Locate Main.java inside the src folder.
+
+3. Right-click on Main.java → Run 'Main'.
+
+4. The program will launch in the terminal at the bottom of the window.
+
+✅ Option 2: Using the Command Line
+
+1. Open your terminal and navigate to the src/ directory:
+cd C:\Users\aless\JavaProjects\SimpleBankingApp\SimpleBankingApp/src
+
+2. Compile the Java files:
+javac Main.java BankUser.java BankingApp.java
+
+3. Run the program:
+java Main
+
+⚠️ Make sure you're inside the src/ directory when running these commands, since there are no packages used.
+
+👨‍💼 Sample Interaction:
+Hello and welcome! Please enter your first name:
+> Alessio
+Thank you! Now please enter your last name:
+> Scarpello
+Match Found!
+Welcome Alessio Scarpello!
+What would you like to do? Press D for deposit, W to withdraw, B to show your balance, or Q to exit:
+> B
+Hello Alessio, here's your balance left: £2458.24
+
+
+🧠 What I Learned
+- How to use classes and inheritance in Java
+
+- Validating user input
+
+- Managing lists of objects (ArrayList)
+
+- Handling console interaction with Scanner
+
+📌 To Do / Improvements
+- Add support for creating new users
+
+- Improve the user interface with better error handling and menus
+
+- Clean up code duplication (like repeated input validation)
+
+🗒️ Notes
+This project is intentionally simple. It's a personal learning exercise, so it's not intended for real-world use — but any feedback is welcome!
+
+📜 License
+This project is open-source and free to use.
